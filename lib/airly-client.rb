@@ -15,4 +15,11 @@ class AirlyClient
                 'apikey' => @api_key
             }
         end
+
+        def fetch(resource)
+            HTTParty.get(
+                base_url + resource,
+                headers: headers 
+            )
+        end
 end
