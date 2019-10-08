@@ -24,7 +24,7 @@ module AirlyClient
                     "maxResults" => maxResults
                 })
 
-            p Installation.new(res)
+            Installation.new(res.body)
         end
     end
 end
