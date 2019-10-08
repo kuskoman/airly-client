@@ -1,3 +1,7 @@
+require_relative 'location'
+require_relative 'address'
+require_relative 'sponsor'
+
 module AirlyClient
     class Installation < Entity
         def id
@@ -5,7 +9,7 @@ module AirlyClient
         end
 
         def location
-            @raw['location']
+            @location ||= Location.new(@raw['location'])
         end
 
         def elevation
@@ -13,7 +17,7 @@ module AirlyClient
         end
 
         def address
-            @raw['address']
+            @address ||= Address.new(@raw['address'])
         end
         
         def airly
@@ -21,7 +25,7 @@ module AirlyClient
         end
 
         def sponsor
-            @raw['sponsor']
+            @sponsor ||= Sponsor.new(@raw['sponsor'])
         end
     end
 end
