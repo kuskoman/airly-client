@@ -15,7 +15,7 @@ module AirlyClient
             api.api_key = api_key
         end
 
-        def nearest(latitude, longtitude, maxDistanceKM: 5, maxResults: 1)
+        def nearest_installation(latitude, longtitude, maxDistanceKM: 5, maxResults: 1)
             res = api.make_request("installations/nearest",
                 {
                     "lat" => latitude,
@@ -31,6 +31,12 @@ module AirlyClient
             end
 
             installations
+        end
+
+        def installation(id)
+            res = api.make_request("installations/#{id}")
+
+            Installation.new(res)
         end
     end
 end

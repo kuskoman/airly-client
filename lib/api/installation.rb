@@ -19,5 +19,9 @@ module AirlyClient
         def airly
             @raw['airly']
         end
+
+        def sponsor
+            @raw['sponsor']
+        end
     end
 end
