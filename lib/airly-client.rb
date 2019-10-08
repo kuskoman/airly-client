@@ -1,6 +1,7 @@
 require_relative 'api/client'
 require_relative 'api/entity'
 require_relative 'api/installation'
+require_relative 'api/measurements'
 
 require 'httparty'
 require 'uri'
@@ -15,13 +16,13 @@ module AirlyClient
             api.api_key = api_key
         end
 
-        def nearest_installation(latitude, longtitude, maxDistanceKM: 5, maxResults: 1)
+        def nearest_installation(latitude, longtitude, max_distance_km: 5, max_results: 1)
             res = api.make_request("installations/nearest",
                 {
                     "lat" => latitude,
                     "lng" => longtitude,
-                    "maxDistanceKM" => maxDistanceKM,
-                    "maxResults" => maxResults
+                    "maxDistanceKM" => max_distance_km,
+                    "maxResults" => max_results
                 })
 
             installations = []
@@ -37,6 +38,16 @@ module AirlyClient
             res = api.make_request("installations/#{id}")
 
             Installation.new(res)
+        end
+
+        def measurements(installation_id, index_type = 'AIRLY_CAQI')
+            res = api.make_request("measurements/installation",
+                {
+                    "installationId" => installation_id,
+                    "indexType" => index_type
+                })
+
+            Measurements.new(res)
         end
     end
 end
