@@ -16,7 +16,7 @@ module AirlyClient
         end
 
         def nearest(latitude, longtitude, maxDistanceKM: 5, maxResults: 1)
-            res = api.fetch("installations/nearest",
+            res = api.make_request("installations/nearest",
                 {
                     "lat" => latitude,
                     "lng" => longtitude,
@@ -24,7 +24,13 @@ module AirlyClient
                     "maxResults" => maxResults
                 })
 
-            Installation.new(res.body)
+            installations = []
+
+            res.each do |raw|
+                installations << Installation.new(raw)
+            end
+
+            installations
         end
     end
 end

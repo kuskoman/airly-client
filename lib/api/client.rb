@@ -6,14 +6,19 @@ module AirlyClient
             @base_url = base_url
         end
 
-        def fetch(resource, params = {})
-            HTTParty.get(
-                @base_url + resource + stringify_params(params),
-                headers: headers
-            )
+        def make_request(resource, params = {})
+            res = fetch(resource, params)
+            JSON.parse(res.body)
         end
 
         private
+
+            def fetch(resource, params)
+                HTTParty.get(
+                    @base_url + resource + stringify_params(params),
+                    headers: headers
+                )
+            end
 
             def headers
                 {
